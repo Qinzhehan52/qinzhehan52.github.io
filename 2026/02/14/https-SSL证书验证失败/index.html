@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="报警响起，但是…?日常我们的KA会上传菜单，其中自然包含很多菜品的图片 ，某天，后天检测到大量的图片拉取失败。 随便找到一张图片的URL，在服务器上进行请求，出现如下错误。 1curl: (60) SSL certificate problem: certificate has expired  然而使用 MacBook 本地 curl 是成功的，在chrome浏览器也实验成功。 观察可以发现，在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="https 从一次SSL证书验证失败讲起">
+<meta property="og:url" content="http://qinzhehan52.github.io/2026/02/14/https-SSL%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81%E5%A4%B1%E8%B4%A5/index.html">
+<meta property="og:site_name" content="SeekRVL 的笔记">
+<meta property="og:description" content="报警响起，但是…?日常我们的KA会上传菜单，其中自然包含很多菜品的图片 ，某天，后天检测到大量的图片拉取失败。 随便找到一张图片的URL，在服务器上进行请求，出现如下错误。 1curl: (60) SSL certificate problem: certificate has expired  然而使用 MacBook 本地 curl 是成功的，在chrome浏览器也实验成功。 观察可以发现，在">
+<meta property="og:locale">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%201.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%202.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%203.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%204.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%205.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%206.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%207.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/6009e546-24f4-4235-aeea-9134f84bf230.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%208.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%209.png?raw=true">
+<meta property="og:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%2010.png?raw=true">
+<meta property="article:published_time" content="2026-02-14T10:15:43.000Z">
+<meta property="article:modified_time" content="2026-02-14T13:00:43.978Z">
+<meta property="article:author" content="SeekRVL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://qinzhehan52.github.io/2026/02/14/https-SSL证书验证失败/"/>
+
+
+
+
+
+  <title>https 从一次SSL证书验证失败讲起 | SeekRVL 的笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1d9a0349e26db94f49a3945629a65024";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SeekRVL 的笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qinzhehan52.github.io/2026/02/14/https-SSL%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81%E5%A4%B1%E8%B4%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SeekRVL 的笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">https 从一次SSL证书验证失败讲起</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2026-02-14T18:15:43+08:00">
+                2026-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="报警响起，但是…"><a href="#报警响起，但是…" class="headerlink" title="报警响起，但是…?"></a>报警响起，但是…?</h2><p>日常我们的KA会上传菜单，其中自然包含很多菜品的图片 ，某天，后天检测到大量的图片拉取失败。</p>
+<p>随便找到一张图片的URL，在服务器上进行请求，出现如下错误。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">curl</span>: (<span class="number">60</span>) <span class="variable constant_">SSL</span> certificate <span class="attr">problem</span>: certificate has expired</span><br></pre></td></tr></table></figure>
+
+<p>然而使用 MacBook 本地 <code>curl</code> 是成功的，在chrome浏览器也实验成功。</p>
+<p>观察可以发现，在服务器上 ping 对方 cdn 域名，和在mac 本地 ping 对方 cdn 域名，返回的 IP 是不同的，难道是 cdn 问题？</p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image.png?raw=true" alt="image.png"></p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%201.png?raw=true" alt="image.png"></p>
+<p>那假如我们在 MacBook 修改 Hosts文件强行将解析指向 IP 呢？ 也是成功的。</p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%202.png?raw=true" alt="image.png"></p>
+<p>有的同学认为，SSL证书验证，和客户端没有关系，一定是服务端的问题，这种观点正确吗 ？</p>
+<h2 id="回顾-https-，也许是因为它？"><a href="#回顾-https-，也许是因为它？" class="headerlink" title="回顾 https ，也许是因为它？"></a>回顾 https ，也许是因为它？</h2><p>我们想象一下，如果我们自己去设计 https ，在验证一个我们不认识的站点的证书时，大概是要依赖一个权威机构的给我们的”名单”，一旦这个”名单”不再准确时，就会发生误判。而事实也的确如此。</p>
+<p>SSL证书验证的流程是 :</p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%203.png?raw=true" alt="image.png"></p>
+<p>在3.过程中，客户端验证服务器的证书，检查：</p>
+<ul>
+<li>证书是否由受信任的 CA 签发</li>
+<li>证书是否在有效期内</li>
+<li>证书上的公钥是否与服务器的主机名匹配</li>
+</ul>
+<p>而为了完成这些验证，客户端需要有一个预安装的受信任的根证书列表。这些根证书由证书颁发机构（CA）签发，CA 是负责验证和颁发数字证书的机构。</p>
+<p>由于不同的操作系统和浏览器在其信任存储中维护各自的根证书列表，我们在使用不同的客户端访问相同的https资源时，会得到不同的验证结果。</p>
+<p>举个例子：如果我们手头有事多年前的Chrome浏览器，它大概率是不能访问目前很多合法的https网络服务的，因为他的根证书列表太老了，不包含目前很多流行的根证书。</p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%204.png?raw=true" alt="image.png"></p>
+<p>难道说，我们这次也遇到了这个问题？</p>
+<h2 id="快速止血"><a href="#快速止血" class="headerlink" title="快速止血"></a>快速止血</h2><p>快速恢复的方案大概有三个：</p>
+<ol>
+<li>使用 <code>InsecureSkipVerify</code> ，跳过 SSL 验证；</li>
+<li>更新系统的CA证书列表；</li>
+<li>不更新系统的CA证书列表而是在 golang 代码中指定 CA 证书列表。</li>
+</ol>
+<p>对比方案优劣，第二个方案被我们首先放弃，更新系统CA证书是一个系统级操作，其影响面是更大的，且运维操作的步骤也非常繁琐。</p>
+<p>使用方案三，如果我们可以找到可信的CA证书列表，方案三更适宜作为长期方案，但寻找可信CA证书列表以及进行代码开发部署都不是短时间内最好的选择。</p>
+<p>幸运的是，之前的开发同学由于担忧第三方图床技术良莠不齐，已经在代码中实现了通过 <code>apollo</code> 配置控制指定域名的图床使用<code>InsecureSkipVerify</code> 的功能。通过修改配置我们实现快速止血。</p>
+<h2 id="回到现场"><a href="#回到现场" class="headerlink" title="回到现场"></a>回到现场</h2><p>为了探究问题的根源，并且得到长期的解决方案，我们继续对这个图床进行研究。</p>
+<p>（此处将使用与当时同样使用了Let’s Encrypt证书的另一网站继续演示）</p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%205.png?raw=true" alt="image.png"></p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%206.png?raw=true" alt="image.png"></p>
+<p>如此巧合，我们要访问的网站，<em><strong>最近更新了SSL证书</strong></em>，使用了 Let’s Encrypt 颁发的证书，这家 CA 频发兼容性问题。</p>
+<p>在Let’s Encrypt官网，一份公告说明最近确实发生了些什么。</p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%207.png?raw=true" alt="image.png"></p>
+<p>使用Chrome查看该图床证书的详细信息，可以看到其证书CA确实是ISRG Root X1。</p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/6009e546-24f4-4235-aeea-9134f84bf230.png?raw=true" alt="image.png"></p>
+<p>不同的软件会使用CA证书列表进行SSL验证，比如 <code>curl</code> 使用 <code>nss</code>， 而 <code>wget</code> 使用 <code>openssl</code>，我们运行在服务器上的 golang 服务 <code>http.Client</code> 默认使用系统 CA 证书来验证 SSL 证书。</p>
+<p>那么我们的服务器到底对 ISRG Root X1 兼容行如何？</p>
+<p>我们使用的 docker 镜像基于 CentOS7.9，实际是一个非常老的版本，其内置的 <code>curl</code> <code>wget</code> 以及 <code>ca-certificates</code> 版本都很陈旧，对于较新的CA机构，兼容性比较差。</p>
+<p>下面的图片分别展示了<code>curl</code> <code>wget</code>  <code>ca-certificates</code> 版本依赖的 <code>nss</code> <code>openssl</code> 版本。</p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%208.png?raw=true" alt="image.png"></p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%209.png?raw=true" alt="image.png"></p>
+<p><img src="https://github.com/Qinzhehan52/blog-backup/blob/master/source/images/image%2010.png?raw=true" alt="image.png"></p>
+<p>在 Let’ Encrypt 官网的兼容性文档中，明确了支持 ISRG Root X1 的各种平台版本，其中 <code>NSS</code> &gt; 3.26, 明显我们的镜像不满足，对于 RHEL &gt;&#x3D; 6.10, 7.4 (<a href="https://src.fedoraproject.org/rpms/ca-certificates/c/02204a071d2effe7cdb840c1a2763bcdc396c4be">with updates applied</a>), 8+ 这一项，我们进入后可以看到</p>
+<blockquote>
+<p>Platforms that trust ISRG Root X1</p>
+<ul>
+<li>Windows &gt;&#x3D; <a href="https://learn.microsoft.com/en-us/security/trusted-root/participants-list">XP SP3, Server 2008</a> (unless <a href="https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc733922%28v=ws.10%29">Automatic Root Certificate Updates</a> have been disabled)</li>
+<li>macOS &gt;&#x3D; <a href="https://support.apple.com/en-us/103425">10.12.1 Sierra</a></li>
+<li>iOS &gt;&#x3D; <a href="https://support.apple.com/en-us/HT207177">10</a></li>
+<li>Android &gt;&#x3D; <a href="https://android.googlesource.com/platform/system/ca-certificates/+/android-7.1.1_r15">7.1.1</a></li>
+<li>Firefox &gt;&#x3D; <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1204656">50.0</a></li>
+<li>Ubuntu &gt;&#x3D; <a href="https://launchpad.net/ubuntu/+source/ca-certificates/20161102">12.04 Precise Pangolin</a> (with updates applied)</li>
+<li>Debian &gt;&#x3D; <a href="https://tracker.debian.org/news/812114/accepted-ca-certificates-20161102-source-all-into-unstable/">8 &#x2F; Jessie</a> (with updates applied)</li>
+<li>RHEL &gt;&#x3D; 6.10, 7.4 (<a href="https://src.fedoraproject.org/rpms/ca-certificates/c/02204a071d2effe7cdb840c1a2763bcdc396c4be">with updates applied</a>), 8+</li>
+<li>Java &gt;&#x3D; <a href="https://www.oracle.com/java/technologies/javase/7u151-relnotes.html">7u151</a>, <a href="https://www.oracle.com/java/technologies/javase/8u141-relnotes.html">8u141</a>, <a href="https://www.oracle.com/java/technologies/javase/9-all-relnotes.html#JDK-8177539">9+</a></li>
+<li>NSS &gt;&#x3D; <a href="https://nss-crypto.org/reference/security/nss/legacy/nss_releases/nss_3.26_release_notes/index.html">3.26</a></li>
+<li>Chrome &gt;&#x3D; <a href="https://chromium.googlesource.com/chromium/src/+/main/net/data/ssl/chrome_root_store/faq.md#when-are-these-changes-taking-place">105</a> (earlier versions use the operating system trust store)</li>
+<li>PlayStation &gt;&#x3D; <a href="https://web.archive.org/web/20210306180757/https://www.sie.com/content/dam/corporate/jp/guideline/PS4_Web_Content-Guidelines_e.pdf">PS4 v8.0.0</a></li>
+</ul>
+</blockquote>
+<p>而 <code>openssl</code> 1.0x版本不支持 ISRG Root X1 的 case，在 stackOverFlow medium askUbuntu Github 等技术网站也有无数的吐槽。</p>
+<p>到此，可以得出结论，我们的服务器 golang 服务，<code>wget</code> <code>curl</code>，均不支持 ISRG Root X1。</p>
+<h2 id="引申阅读"><a href="#引申阅读" class="headerlink" title="引申阅读"></a>引申阅读</h2><p><a href="https://www.secrss.com/articles/71306"><strong>苹果大幅缩短安全证书有效期引发众怒</strong></a></p>
+<p><strong>突发事件！Apple Music等核心服务因SSL&#x2F;TLS证书过期发生中断</strong></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本篇通过一个案例，我们回顾了下 https 的验证流程，了解了工具的异同、软件版本的差异，带来的SSL验证结果的不同。</p>
+<p>软件工程、网络工程发展至今，有了很多规范和广泛被应用的基础建设，然而这些都是人的创造物，没有100%的正确率。我们大概率不是 0 day 的发现者，但是一根绳可能以 n 种方式绊倒不同的人。</p>
+<h3 id="经验教训"><a href="#经验教训" class="headerlink" title="经验教训"></a>经验教训</h3><ul>
+<li>在使用第三方服务时，要充分考虑证书兼容性问题</li>
+<li>系统基础设施要保持更新，避免使用过于陈旧的版本</li>
+<li>在开发时预留降级和配置开关，方便应急处理</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/11/03/elastic-search-php%E8%B6%85%E6%97%B6%E6%8E%A7%E5%88%B6%E6%8E%A2%E7%B4%A2/" rel="next" title="elastic-search-php超时控制探索">
+                <i class="fa fa-chevron-left"></i> elastic-search-php超时控制探索
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="" />
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%A5%E8%AD%A6%E5%93%8D%E8%B5%B7%EF%BC%8C%E4%BD%86%E6%98%AF%E2%80%A6"><span class="nav-number">1.</span> <span class="nav-text">报警响起，但是…?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE-https-%EF%BC%8C%E4%B9%9F%E8%AE%B8%E6%98%AF%E5%9B%A0%E4%B8%BA%E5%AE%83%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">回顾 https ，也许是因为它？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E6%AD%A2%E8%A1%80"><span class="nav-number">3.</span> <span class="nav-text">快速止血</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%88%B0%E7%8E%B0%E5%9C%BA"><span class="nav-number">4.</span> <span class="nav-text">回到现场</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%B3%E9%98%85%E8%AF%BB"><span class="nav-number">5.</span> <span class="nav-text">引申阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C%E6%95%99%E8%AE%AD"><span class="nav-number">6.1.</span> <span class="nav-text">经验教训</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SeekRVL</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

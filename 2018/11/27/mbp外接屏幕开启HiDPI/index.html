@@ -85,8 +85,9 @@
 <meta property="og:url" content="http://qinzhehan52.github.io/2018/11/27/mbp%E5%A4%96%E6%8E%A5%E5%B1%8F%E5%B9%95%E5%BC%80%E5%90%AFHiDPI/index.html">
 <meta property="og:site_name" content="SeekRVL 的笔记">
 <meta property="og:description" content="mbp 外接显示器开启HiDPI1. 首先，打开系统分区权限：查看SIP状态 在终端中输入csrutil status，就可以看到是enabled还是disabled。  关闭SIP  重启MAC，按住cmd+R直到屏幕上出现苹果的标志和进度条，进入Recovery模式； 在屏幕最上方的工具栏找到实用工具（左数第3个），打开终端，输入：csrutil disable； 关掉终端，重启mac； 重启">
+<meta property="og:locale">
 <meta property="article:published_time" content="2018-11-27T06:02:50.000Z">
-<meta property="article:modified_time" content="2021-06-08T18:18:22.172Z">
+<meta property="article:modified_time" content="2026-02-14T13:00:43.978Z">
 <meta property="article:author" content="SeekRVL">
 <meta property="article:tag" content="mac">
 <meta name="twitter:card" content="summary">
@@ -96,7 +97,7 @@
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/',
+    root: '',
     scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
@@ -145,7 +146,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="default">
 
@@ -265,7 +266,7 @@
     <link itemprop="mainEntityOfPage" href="http://qinzhehan52.github.io/2018/11/27/mbp%E5%A4%96%E6%8E%A5%E5%B1%8F%E5%B9%95%E5%BC%80%E5%90%AFHiDPI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="SeekRVL">
+      <meta itemprop="name" content="">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
@@ -362,17 +363,17 @@
 <li>重启以后可以在终端中查看状态确认。</li>
 </ul>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 <h3 id="开启SIP"><a href="#开启SIP" class="headerlink" title="开启SIP"></a>开启SIP</h3><blockquote>
-<p>与关闭的步骤类似，只是在S2中输入csrutil enable即可。<a href="https://www.jianshu.com/p/fe78d2036192" target="_blank" rel="noopener">转自简书 Mac开启关闭SIP（系统完整性保护）</a></p>
+<p>与关闭的步骤类似，只是在S2中输入csrutil enable即可。<a href="https://www.jianshu.com/p/fe78d2036192">转自简书 Mac开启关闭SIP（系统完整性保护）</a></p>
 </blockquote>
-<h2 id="2-获得显示器的-VendorID-和-ProductID-（制造商ID-和-产品ID），在终端运行："><a href="#2-获得显示器的-VendorID-和-ProductID-（制造商ID-和-产品ID），在终端运行：" class="headerlink" title="2. 获得显示器的 VendorID 和 ProductID （制造商ID 和 产品ID），在终端运行："></a>2. 获得显示器的 VendorID 和 ProductID （制造商ID 和 产品ID），在终端运行：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; ioreg -lw0 | grep IODisplayPrefsKey | grep -o <span class="string">'/[^/]\+"$'</span></span><br><span class="line"></span><br><span class="line">/AppleBacklightDisplay-610-a034<span class="string">"</span></span><br><span class="line"><span class="string">/AppleDisplay-30ae-61a4"</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-获得显示器的-VendorID-和-ProductID-（制造商ID-和-产品ID），在终端运行："><a href="#2-获得显示器的-VendorID-和-ProductID-（制造商ID-和-产品ID），在终端运行：" class="headerlink" title="2. 获得显示器的 VendorID 和 ProductID （制造商ID 和 产品ID），在终端运行："></a>2. 获得显示器的 VendorID 和 ProductID （制造商ID 和 产品ID），在终端运行：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; ioreg -lw0 | grep IODisplayPrefsKey | grep -o <span class="string">&#x27;/[^/]\+&quot;$&#x27;</span></span><br><span class="line"></span><br><span class="line">/AppleBacklightDisplay-610-a034<span class="string">&quot;</span></span><br><span class="line"><span class="string">/AppleDisplay-30ae-61a4&quot;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>其中第一行610代表的是mac内置显示器，第二行即我们的外接显示器，VendorID=30ae，ProductID=61a4</p>
+<p>其中第一行610代表的是mac内置显示器，第二行即我们的外接显示器，VendorID&#x3D;30ae，ProductID&#x3D;61a4</p>
 </blockquote>
-<h2 id="3-生成我们需要的配置文件"><a href="#3-生成我们需要的配置文件" class="headerlink" title="3. 生成我们需要的配置文件"></a>3. 生成我们需要的配置文件</h2><p>   使用该网页生成器填写所需信息，生成配置并下载<a href="https://comsysto.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/" target="_blank" rel="noopener">HiDPI配置生成器</a></p>
+<h2 id="3-生成我们需要的配置文件"><a href="#3-生成我们需要的配置文件" class="headerlink" title="3. 生成我们需要的配置文件"></a>3. 生成我们需要的配置文件</h2><p>   使用该网页生成器填写所需信息，生成配置并下载<a href="https://comsysto.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/">HiDPI配置生成器</a></p>
 <h2 id="4-复制配置到系统目录"><a href="#4-复制配置到系统目录" class="headerlink" title="4. 复制配置到系统目录"></a>4. 复制配置到系统目录</h2><ul>
 <li><p>OS X 10.11及以上</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DIR=/System/Library/Displays/Contents/Resources/Overrides</span><br></pre></td></tr></table></figure>
@@ -381,13 +382,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DIR=/System/Library/Displays/Overrides</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>把 VID 和 PID 替换成上面获得的VendorID和ProductID</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CONF=<span class="variable">$&#123;DIR&#125;</span>/DisplayVendorID-<span class="variable">$&#123;VID&#125;</span>/DisplayProductID-<span class="variable">$&#123;PID&#125;</span></span><br><span class="line">sudo mkdir -p <span class="variable">$&#123;DIR&#125;</span>/DisplayVendorID-<span class="variable">$&#123;VID&#125;</span></span><br><span class="line">sudo cp 配置文件 <span class="variable">$&#123;CONF&#125;</span></span><br></pre></td></tr></table></figure>
-
-</li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CONF=<span class="variable">$&#123;DIR&#125;</span>/DisplayVendorID-<span class="variable">$&#123;VID&#125;</span>/DisplayProductID-<span class="variable">$&#123;PID&#125;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p <span class="variable">$&#123;DIR&#125;</span>/DisplayVendorID-<span class="variable">$&#123;VID&#125;</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> 配置文件 <span class="variable">$&#123;CONF&#125;</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="5-打开系统HIDPI设置"><a href="#5-打开系统HIDPI设置" class="headerlink" title="5. 打开系统HIDPI设置"></a>5. 打开系统HIDPI设置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool YES</span><br></pre></td></tr></table></figure>
+<h2 id="5-打开系统HIDPI设置"><a href="#5-打开系统HIDPI设置" class="headerlink" title="5. 打开系统HIDPI设置"></a>5. 打开系统HIDPI设置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool YES</span><br></pre></td></tr></table></figure>
 
-<h2 id="6-重启并使用RDM调整分辨率"><a href="#6-重启并使用RDM调整分辨率" class="headerlink" title="6. 重启并使用RDM调整分辨率"></a>6. 重启并使用RDM调整分辨率</h2><p> <a href="http://avi.alkalay.net/software/RDM/" target="_blank" rel="noopener">下载RDM</a></p>
+<h2 id="6-重启并使用RDM调整分辨率"><a href="#6-重启并使用RDM调整分辨率" class="headerlink" title="6. 重启并使用RDM调整分辨率"></a>6. 重启并使用RDM调整分辨率</h2><p> <a href="http://avi.alkalay.net/software/RDM/">下载RDM</a></p>
 <p>fix…</p>
 
       
@@ -499,9 +498,9 @@
             
               <img class="site-author-image" itemprop="image"
                 src="/images/avatar.jpg"
-                alt="SeekRVL" />
+                alt="" />
             
-              <p class="site-author-name" itemprop="name">SeekRVL</p>
+              <p class="site-author-name" itemprop="name"></p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -512,7 +511,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -534,7 +533,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -567,7 +566,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mbp-外接显示器开启HiDPI"><span class="nav-number">1.</span> <span class="nav-text">mbp 外接显示器开启HiDPI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-首先，打开系统分区权限："><span class="nav-number">1.1.</span> <span class="nav-text">1. 首先，打开系统分区权限：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看SIP状态"><span class="nav-number">1.1.1.</span> <span class="nav-text">查看SIP状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭SIP"><span class="nav-number">1.1.2.</span> <span class="nav-text">关闭SIP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启SIP"><span class="nav-number">1.1.3.</span> <span class="nav-text">开启SIP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-获得显示器的-VendorID-和-ProductID-（制造商ID-和-产品ID），在终端运行："><span class="nav-number">1.2.</span> <span class="nav-text">2. 获得显示器的 VendorID 和 ProductID （制造商ID 和 产品ID），在终端运行：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-生成我们需要的配置文件"><span class="nav-number">1.3.</span> <span class="nav-text">3. 生成我们需要的配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-复制配置到系统目录"><span class="nav-number">1.4.</span> <span class="nav-text">4. 复制配置到系统目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-打开系统HIDPI设置"><span class="nav-number">1.5.</span> <span class="nav-text">5. 打开系统HIDPI设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-重启并使用RDM调整分辨率"><span class="nav-number">1.6.</span> <span class="nav-text">6. 重启并使用RDM调整分辨率</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mbp-%E5%A4%96%E6%8E%A5%E6%98%BE%E7%A4%BA%E5%99%A8%E5%BC%80%E5%90%AFHiDPI"><span class="nav-number">1.</span> <span class="nav-text">mbp 外接显示器开启HiDPI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%A6%96%E5%85%88%EF%BC%8C%E6%89%93%E5%BC%80%E7%B3%BB%E7%BB%9F%E5%88%86%E5%8C%BA%E6%9D%83%E9%99%90%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">1. 首先，打开系统分区权限：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BSIP%E7%8A%B6%E6%80%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">查看SIP状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%97%ADSIP"><span class="nav-number">1.1.2.</span> <span class="nav-text">关闭SIP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AFSIP"><span class="nav-number">1.1.3.</span> <span class="nav-text">开启SIP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%8E%B7%E5%BE%97%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84-VendorID-%E5%92%8C-ProductID-%EF%BC%88%E5%88%B6%E9%80%A0%E5%95%86ID-%E5%92%8C-%E4%BA%A7%E5%93%81ID%EF%BC%89%EF%BC%8C%E5%9C%A8%E7%BB%88%E7%AB%AF%E8%BF%90%E8%A1%8C%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">2. 获得显示器的 VendorID 和 ProductID （制造商ID 和 产品ID），在终端运行：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%94%9F%E6%88%90%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3. 生成我们需要的配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE%E5%88%B0%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95"><span class="nav-number">1.4.</span> <span class="nav-text">4. 复制配置到系统目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%89%93%E5%BC%80%E7%B3%BB%E7%BB%9FHIDPI%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.5.</span> <span class="nav-text">5. 打开系统HIDPI设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E9%87%8D%E5%90%AF%E5%B9%B6%E4%BD%BF%E7%94%A8RDM%E8%B0%83%E6%95%B4%E5%88%86%E8%BE%A8%E7%8E%87"><span class="nav-number">1.6.</span> <span class="nav-text">6. 重启并使用RDM调整分辨率</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -587,7 +586,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
