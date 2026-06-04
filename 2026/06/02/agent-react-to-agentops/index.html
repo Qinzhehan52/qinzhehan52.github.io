@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://blog.nerdhan.top/images/agent-react-5.webp">
 <meta property="og:image" content="https://blog.nerdhan.top/images/agent-react-6.webp">
 <meta property="article:published_time" content="2026-06-01T16:33:14.000Z">
-<meta property="article:modified_time" content="2026-06-04T17:35:48.320Z">
+<meta property="article:modified_time" content="2026-06-04T17:49:38.832Z">
 <meta property="article:author" content="SeekRVL">
 <meta property="article:tag" content="AI Agent">
 <meta property="article:tag" content="AgentOps">
@@ -221,7 +221,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-06-05 01:35:48" itemprop="dateModified" datetime="2026-06-05T01:35:48+08:00">2026-06-05</time>
+      <time title="修改时间：2026-06-05 01:49:38" itemprop="dateModified" datetime="2026-06-05T01:49:38+08:00">2026-06-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -242,7 +242,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><img src="/images/agent-react-cover.webp" alt="服务端系统里的 Agent Runtime" width="1672" height="941" loading="eager">
+    <div class="post-body" itemprop="articleBody"><img src="/images/agent-react-cover.webp" alt="服务端系统里的 Agent Runtime" width="1672" height="941" loading="eager" style="max-width:100%;height:auto">
 
 <p>最近顺着 AI Agent 这条线做了一轮梳理。</p>
 <p>起点是 ReAct 论文，后面一路看到了 CoT、Tool Calling、MCP、Skill、LangChain、LangGraph、多 Agent 架构，以及最近常被提到的 AgentOps。</p>
@@ -261,7 +261,7 @@
 <p>它的关键价值不是代码多复杂，而是把 Agent 的基本工作循环标准化了：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Thought -&gt; Action -&gt; Observation -&gt; Thought -&gt; ... -&gt; Final Answer</span><br></pre></td></tr></table></figure>
 
-<img src="/images/agent-react-1.webp" alt="图 1：ReAct 最小闭环" width="1672" height="941" loading="lazy">
+<img src="/images/agent-react-1.webp" alt="图 1：ReAct 最小闭环" width="1672" height="941" loading="lazy" style="max-width:100%;height:auto">
 
 <p>模型不再只是一次性生成文本，而是在外部环境反馈中逐步逼近答案。</p>
 <p>论文里的几个实验场景也很典型。</p>
@@ -289,7 +289,7 @@
 <p>完整链路大概是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">用户问题</span><br><span class="line">-&gt; 模型生成 tool call</span><br><span class="line">-&gt; Runtime 解析工具名和参数</span><br><span class="line">-&gt; 从 Tool Registry 找到真实函数</span><br><span class="line">-&gt; 执行函数</span><br><span class="line">-&gt; 把函数结果作为 Observation 写回上下文</span><br><span class="line">-&gt; 模型继续推理或给出最终答案</span><br></pre></td></tr></table></figure>
 
-<img src="/images/agent-react-2.webp" alt="图 2：Agent 调工具的运行时结构" width="1672" height="941" loading="lazy">
+<img src="/images/agent-react-2.webp" alt="图 2：Agent 调工具的运行时结构" width="1672" height="941" loading="lazy" style="max-width:100%;height:auto">
 
 <p>伪代码也很直观：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    output = llm(messages, tools=tool_schemas)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> output.final_answer:</span><br><span class="line">        <span class="keyword">return</span> output.final_answer</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> call <span class="keyword">in</span> output.tool_calls:</span><br><span class="line">        tool_name = call.name</span><br><span class="line">        tool_args = call.arguments</span><br><span class="line">        tool_result = tool_registry[tool_name](**tool_args)</span><br><span class="line"></span><br><span class="line">        messages.append(&#123;</span><br><span class="line">            <span class="string">&quot;role&quot;</span>: <span class="string">&quot;tool&quot;</span>,</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: tool_name,</span><br><span class="line">            <span class="string">&quot;content&quot;</span>: tool_result,</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
@@ -324,7 +324,7 @@
 <li>Function Calling 解决“行动指令如何稳定表达”</li>
 </ul>
 <p>一个是推理-行动范式，一个是工具调用接口协议。</p>
-<img src="/images/agent-react-3.webp" alt="图 3：ReAct 与 Function Calling 的层级关系" width="1672" height="941" loading="lazy">
+<img src="/images/agent-react-3.webp" alt="图 3：ReAct 与 Function Calling 的层级关系" width="1672" height="941" loading="lazy" style="max-width:100%;height:auto">
 
 <h2 id="5-LangChain、LangGraph-和多-Agent"><a href="#5-LangChain、LangGraph-和多-Agent" class="headerlink" title="5. LangChain、LangGraph 和多 Agent"></a>5. LangChain、LangGraph 和多 Agent</h2><p>如果只是手写一个最小 ReAct Agent，100 到 200 行 Python 就能跑起来。</p>
 <p>但一旦进入试生产，真正消耗时间的通常不是 agent loop，而是这些问题：</p>
@@ -348,7 +348,7 @@
 <p>更稳妥的演进路线是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">单 Agent + 多 Tools</span><br><span class="line">-&gt; 复杂后拆 Specialist Agent</span><br><span class="line">-&gt; 需要协作时加 Supervisor / Router</span><br><span class="line">-&gt; 高频稳定流程沉淀为 Workflow / Graph</span><br></pre></td></tr></table></figure>
 
-<img src="/images/agent-react-4.webp" alt="图 4：从单 Agent 到多 Agent / Workflow 的演进路线" width="1672" height="941" loading="lazy">
+<img src="/images/agent-react-4.webp" alt="图 4：从单 Agent 到多 Agent / Workflow 的演进路线" width="1672" height="941" loading="lazy" style="max-width:100%;height:auto">
 
 <p>Tool 是能力原子。</p>
 <p>Agent 是任务专家。</p>
@@ -408,7 +408,7 @@
 <blockquote>
 <p>面向生产 Agent 的运行、观测、评测和治理能力。</p>
 </blockquote>
-<img src="/images/agent-react-5.webp" alt="图 5：AgentOps 六层控制面" width="1672" height="941" loading="lazy">
+<img src="/images/agent-react-5.webp" alt="图 5：AgentOps 六层控制面" width="1672" height="941" loading="lazy" style="max-width:100%;height:auto">
 
 <p>它不是单个工具，也不是简单的日志平台，而是一组围绕 Agent 生命周期的工程能力。</p>
 <p>第一层是配置控制。</p>
@@ -454,7 +454,7 @@
 <li>freeze：出现风险时冻结高危工具或写操作</li>
 <li>human approval：敏感动作必须人工确认</li>
 </ul>
-<img src="/images/agent-react-6.webp" alt="图 6：AgentOps 生命周期" width="1672" height="941" loading="lazy">
+<img src="/images/agent-react-6.webp" alt="图 6：AgentOps 生命周期" width="1672" height="941" loading="lazy" style="max-width:100%;height:auto">
 
 <p>第五层是权限和安全。</p>
 <p>Agent 一旦能调用工具，就不只是“生成文本的模型”。</p>
